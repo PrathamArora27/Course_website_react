@@ -1,34 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState,useEffect } from 'react'
 import './App.css'
+import Card from './components/Card'
+import CardsDiv from './components/CardsDiv'
+import FIlter from './components/FIlter'
+import Navbar from './components/Navbar'
+import { filterData, apiUrl } from './data'
+import { toast } from 'react-toastify';   
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [courses,setCourses] = useState(null);
+  
+  const fetchData = async () => {
+    try {
+      const fetchedData = await fetch(apiUrl);
+      const data = await fetchedData.json();
+      // console.log(data);
+      setCourses(data.data);
+    }
+    catch (error) {
+      console.log("error is : ", error);
+    }
+  }
+
+  useEffect(() => {
+    console.log('Fetching data...');
+    fetchData();
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+
+    <div>
+      <Navbar />
+      <FIlter filterData={filterData} />
+      <CardsDiv courses={courses}/>
+
+    </div>
+
   )
 }
 
