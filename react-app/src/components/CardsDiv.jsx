@@ -1,32 +1,38 @@
 import React from 'react'
+import Card from './Card';
 
 const CardsDiv = ({ courses }) => {
   if (!courses) {
     return <p>Loading...</p>; // or any placeholder content
   }
-  
+
   // console.log(courses);
   let allCourses = [];
 
-  const getCourses = ()=>{
+  const getCourses = () => {
 
-    Object.values(courses).forEach((courseCategory)=>{
-      courseCategory.forEach((course)=>{
+    Object.values(courses).forEach((courseCategory) => {
+      courseCategory.forEach((course) => {
         // console.log(course)
         allCourses.push(course);
       })
-      
+
     })
-    
+
     console.log(allCourses)
     return allCourses;
   }
 
 
-``
-  return (
+  ``
+  return ( 
     <div>
-      getCourses()
+      {getCourses().map((course, index) => {
+        return (
+          <Card key={course.id} course={course} />
+        )
+      }
+      )}
     </div>
   )
 }

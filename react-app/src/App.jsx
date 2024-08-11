@@ -16,6 +16,7 @@ function App() {
       const fetchedData = await fetch(apiUrl);
       const data = await fetchedData.json();
       // console.log(data);
+      toast.success("data fetched")
       setCourses(data.data);
     }
     catch (error) {
