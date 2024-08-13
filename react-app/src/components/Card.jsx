@@ -1,9 +1,39 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { FcLike ,FcLikePlaceholder} from "react-icons/fc";
+import { toast } from 'react-toastify';
 
-const Card = () => {
-  return (
-    <div>
+const Card = ({course,likedCourses,setLikedCourses}) => {
+
+  const heartHandler = () => {
+    setLikedCourses(prevLikedCourses => {
+      const isLiked = prevLikedCourses.includes(course.id);
       
+      // Handle side effects like showing toast
+      if (isLiked) {
+        toast.info(`${course.title} is removed`);
+        return prevLikedCourses.filter(id => id !== course.id);
+      } else {
+        toast.success(`${course.title} is Liked`);
+        return [...prevLikedCourses, course.id];
+      }
+    });
+  };
+
+
+  
+
+  return (
+    <div className='w-[300px] '>
+      <div className='imageClass'>
+        <img src={course.image.url} alt="" />
+      </div>
+      <button onClick={()=>heartHandler()}>{
+        likedCourses.includes(course.id)
+        ?(<FcLikePlaceholder fontSize="1.75rem"/>)
+        :(<FcLike fontSize="1.75rem"/>)
+        }</button>
+      <p>{course.title}</p>
+      <p>{course.description}</p>
     </div>
   )
 }
