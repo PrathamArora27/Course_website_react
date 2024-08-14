@@ -18,6 +18,10 @@ export const filterData = [
     {
         id:"5",
         title:"Lifestyle"
+    },
+    {
+        id:"6",
+        title:"Non"
     }
 ];
 

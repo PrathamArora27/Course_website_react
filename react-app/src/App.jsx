@@ -13,6 +13,7 @@ import { TailSpin } from 'react-loader-spinner';
 function App() {
   const [courses,setCourses] = useState([]);
   const [loading,setLoading] = useState(true);
+  const [category,setCategory] = useState(filterData[0].title);
 
 
   const fetchData = async () => {
@@ -39,8 +40,8 @@ function App() {
 
     <div>
       <Navbar />
-      <FIlter filterData={filterData} />
-      <CardsDiv className = "w-11/12 max-w-[1200px] mx-auto flex flex-wrap justify-center items-center min-h-[50vh]" courses={courses}/>
+      <FIlter filterData={filterData} category={category} setCategory={setCategory}/>
+      <CardsDiv className = "w-11/12 max-w-[1200px] mx-auto flex flex-wrap justify-center items-center min-h-[50vh]" category={category}  courses={courses}/>
 
     </div>
 

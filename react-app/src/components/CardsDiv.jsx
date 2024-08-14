@@ -1,47 +1,57 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import Card from './Card';
 import { TailSpin } from 'react-loader-spinner';
 
-const CardsDiv = ({ courses,className }) => {
-  const [likedCourses,setLikedCourses] = useState([]);
+const CardsDiv = ({ courses, className, category }) => {
+  const [likedCourses, setLikedCourses] = useState([]);
 
-
-
-  if (courses.length==0) {
-    return ( <div className={`flex items-center justify-center h-full ${className}`}>
-      <TailSpin color="#00BFFF" height={80} width={80} />
-    </div>) 
+  // if array is empty then we show a loader
+  if (courses.length === 0) {
+    return (
+      <div className={`flex items-center justify-center h-full ${className}`}>
+        <TailSpin color="#00BFFF" height={80} width={80} />
+      </div>
+    );
   }
-
-  // console.log(courses);
-  let allCourses = []; 
-
+  
+  // Helper function to get courses
+  
   const getCourses = () => {
-
-    Object.values(courses).forEach((courseCategory) => {
-      courseCategory.forEach((course) => {
-        // console.log(course)
-        allCourses.push(course);
-      })
-
-    })
-
-    // console.log(allCourses)
-    return allCourses;
+    if(category==="All"){
+      let allCourses = [];
+      Object.values(courses).forEach(courseCategory => {
+        courseCategory.forEach(course => {
+          allCourses.push(course);
+        });
+      });
+      return allCourses;
+    }
+    else if(category === "Non"){
+      let allCourses = [];
+      return allCourses;
+    }
+    else{
+      return courses[category];
+    }
   }
+  
+  const filteredCourses = getCourses();
+  
+  
+  
+ 
 
-
-  ``
-  return ( 
+  return (
     <div className={className}>
-      {getCourses().map((course, index) => {
-        return (
-          <Card key={course.id} course={course} likedCourses={likedCourses} setLikedCourses={setLikedCourses} />
-        )
-      }
-      )}
+      {filteredCourses.length===0
+      ?(<p>Nothing to Display</p>)
+      :(filteredCourses.map(course => (
+        <Card key={course.id} course={course} likedCourses={likedCourses} setLikedCourses={setLikedCourses} />
+      )))
+    }
+      
     </div>
-  )
-}
+  );
+};
 
-export default CardsDiv
+export default CardsDiv;

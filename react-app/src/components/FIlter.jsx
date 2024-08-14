@@ -1,10 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-const FIlter = ({filterData}) => {
+const FIlter = ({filterData,category,setCategory}) => {
+
+  const categoryHandle = (item)=>{
+    setCategory(item.title)
+  }
+  useEffect(()=>{
+    console.log(category);
+    
+  },[category])
   return (
     <div>
      { filterData.map((item,index) => (
-      <button key={item.id}>{item.title}</button>
+      <button onClick={()=>{categoryHandle(item)}} key={item.id}>{item.title}</button>
      ))}
     </div>
   )
